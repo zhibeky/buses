@@ -1,0 +1,40 @@
+#include <iostream> 
+#include <map>
+# include <set>
+using namespace std;
+void PrintMap(map<set<string>, int> &m){
+  for(const auto &z : m){
+    cout << z.second << " ";
+    for(const auto &x : z.first){
+      cout << x << " ";
+    }
+    cout << endl;
+  }
+}
+int main(){
+  int Q;
+  cin >> Q;
+  map<set<string>, int> set_bus;
+  set<string> bus;
+  for(Q; Q > 0; Q--){
+    int N;
+    cin >> N;
+    for(N; N > 0; N--){
+      string stop;
+      cin >> stop;
+      bus.insert(stop);
+    }
+    if(set_bus.count(bus)){
+      cout << "Already exists for " << set_bus[bus] << endl;
+    }
+    else{
+      set_bus[bus];
+      int size = set_bus.size();
+      set_bus[bus] = size;
+      cout << "New bus " << set_bus[bus] << endl;
+    }
+    bus.clear();
+  }
+  return 0;
+}
+
