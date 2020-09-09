@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+using namespace std;
+int main(){
+  int Q, N;
+  string stop;
+  map<vector<string>, int> m;
+  cin >> Q;
+  for(Q; Q > 0; Q--){
+    vector<string> v;
+    cin >> N;
+    for(N; N > 0; N--){
+      cin >> stop;
+      v.push_back(stop);
+    }
+    if(m.count(v)) {
+      cout << "Already exists for "  << m[v] << endl;
+    } else {
+      m[v];
+      int r = m.size();
+      m[v] = r;
+      cout << "New bus " << m[v] << endl;
+    }
+  }
+  return 0;
+}
