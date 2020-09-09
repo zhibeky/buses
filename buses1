@@ -1,0 +1,107 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+void buses_for_stop_helper(string stop, string bus, vector<string> &vec, map<string, vector<string>> &m){
+  int counter = 0;
+  vector<string> v;
+  for(const auto &it : m){
+    for(const auto &iter : it.second){
+      if(iter == stop && it.first != bus){
+        v.push_back((it.first));
+        counter++;
+      }
+    }
+  }
+  if(counter > 0){
+    for(const auto &z : vec){
+      for(auto i : v){
+        if(i == z)
+          cout << z << " ";
+      }
+    }
+  }
+  else if(counter == 0){
+    cout << "no interchange";
+  }
+  cout << endl;
+}
+void buses_for_stop( string stop, vector<string> &vec, map<string, vector<string>> &m ){
+  int count = 0;
+  vector<string> v;
+  for( const auto &it : m ){
+    for( const auto &iter : it.second ){
+      if( iter == stop ){
+        v.push_back((it.first));
+        count++;
+      }
+    }
+  }
+  if(count > 0){
+    for(const auto &y : vec){
+      for(auto x : v){
+        if( y == x ){
+          cout << x << " ";
+        }
+      }
+    }
+  }
+  else if(count == 0){
+    cout << "No stop";
+  }
+  cout << endl;
+}
+int main(){
+  int Q, stop_count;
+  cin >> Q;
+  string s, bus;
+  vector<string> v;
+  map<string, vector<string>> m;
+  for(int k = 0; k < Q; k++){
+    cin >> s;
+    if(s == "NEW_BUS"){
+      string stop;
+      cin >> bus >> stop_count;
+      v.push_back(bus);
+      for(int j = 0; j < stop_count; j++){
+        cin >> stop;
+        m[bus].push_back(stop);
+      }
+      // m[bus] = v;
+      // v.clear();
+    }
+    else if(s == "BUSES_FOR_STOP"){
+      string stop;
+      cin >> stop;
+      buses_for_stop(stop, v, m);
+    }
+    else if(s == "STOPS_FOR_BUS"){
+      cin >> bus;
+      if(m.count(bus) == 0){
+        cout << "No bus" << endl;
+      }
+      for(const auto& st : m){
+        if(st.first == bus){
+          for(const auto& stop : st.second){
+            cout << "Stop " << stop << ": ";
+            buses_for_stop_helper(stop, bus, v, m);
+          }
+        }
+      }
+    }
+    else if(s == "ALL_BUSES"){
+      if(m.empty())
+        cout << "No buses" << endl;
+      else{
+        for(const auto &bu : m){
+          cout << "Bus " << bu.first << ": ";
+          for(const auto &sec : bu.second){
+            cout << sec << " ";
+          }
+          cout << endl;
+        }
+      }
+    }
+  }
+  return 0;
+}
